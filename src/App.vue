@@ -1,23 +1,34 @@
 <template>
-    <div id="app">
-        <CounterGroup :counterNumber="counterNumbers"/>
-    </div>
+  <div id="app">
+    <input v-model="nums">
+    <router-view v-for="i in getNum(nums)" v-bind:key="i" v-bind:index="i"/>
+    <span>Sum:{{$store.getters.getCounterSum()}}</span>
+  </div>
 </template>
 
 <script>
-    import CounterGroup from './components/CounterGroup.vue'
-
-    export default {
-        name: 'app',
-        components: {
-            CounterGroup
-        },
-        data:function(){
-            return {
-                counterNumbers:3
-            }
-        }
+export default {
+  name: 'App',
+  methods: {
+    getNum: function (e) {
+      let temp = 0
+      let reg = /^[0-9]\d*$/
+      if (!reg.test(e)) {
+        return temp
+      }
+      temp = parseInt(e)
+      return temp
+    },
+    count: function (e) {
+      this.sum = this.sum + e
     }
+  },
+  data () {
+    return {
+      nums: 0
+    }
+  }
+}
 </script>
 
 <style>
